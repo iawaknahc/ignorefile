@@ -20,7 +20,9 @@ It prints a helpful help message.
   EXIT STATUS
          ignorefile exits with the following status:
   
-         0   on success.
+         0   No incidents were found
+  
+         1   Some incidents were found
   
          124 on command line parsing errors.
   

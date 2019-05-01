@@ -34,9 +34,13 @@ let check filename =
       Format.fprintf Format.err_formatter "%a@." Report.pp_incidents incidents ;
       exit 1
 
+let exits =
+  Term.exit_info ~doc:"No incidents were found" 0
+  :: Term.exit_info ~doc:"Some incidents were found" 1
+  :: Term.default_error_exits
+
 let cmd =
   let doc = "Enforce ignore patterns in ignore files" in
-  ( Term.(const check $ file)
-  , Term.info "ignorefile" ~doc ~exits:Term.default_exits )
+  (Term.(const check $ file), Term.info "ignorefile" ~doc ~exits)
 
 let () = Term.(exit @@ eval ~catch:false cmd)
