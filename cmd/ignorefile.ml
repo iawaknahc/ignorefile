@@ -15,7 +15,7 @@ let string_of_file filename =
   string_of_in_channel ch
 
 let file =
-  let doc = "The ignore file to check" in
+  let doc = "The ignore file to check. Default to stdin if not provided" in
   Arg.(value & pos 0 (some non_dir_file) None & info [] ~docv:"FILE" ~doc)
 
 let check filename =
