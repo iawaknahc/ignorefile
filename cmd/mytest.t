@@ -1,3 +1,32 @@
+It prints a helpful help message.
+
+  $ ./ignorefile.exe --help=plain
+  NAME
+         ignorefile - Enforce ignore patterns in ignore files
+  
+  SYNOPSIS
+         ignorefile [OPTION]... [FILE]
+  
+  ARGUMENTS
+         FILE
+             The ignore file to check. Default to stdin if not provided
+  
+  OPTIONS
+         --help[=FMT] (default=auto)
+             Show this help in format FMT. The value FMT must be one of `auto',
+             `pager', `groff' or `plain'. With `auto', the format is `pager` or
+             `plain' whenever the TERM env var is `dumb' or undefined.
+  
+  EXIT STATUS
+         ignorefile exits with the following status:
+  
+         0   on success.
+  
+         124 on command line parsing errors.
+  
+         125 on unexpected internal errors (bugs).
+  
+
 It reads from stdin if no argument is provided.
 
   $ ./ignorefile.exe <<EOF\
