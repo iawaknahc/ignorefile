@@ -1,9 +1,21 @@
-It takes a single FILE as argument.
+It reads from stdin if no argument is provided.
 
-  $ ./ignorefile.exe
-  ignorefile: required argument FILE is missing
-  Usage: ignorefile [OPTION]... FILE
-  Try `ignorefile --help' for more information.
+  $ ./ignorefile.exe <<EOF\
+  > .git\
+  > .svn\
+  > *.gpg\
+  > *.pfx\
+  > *.pem\
+  > *.cer\
+  > *.cert\
+  > *.p12\
+  > *.p8\
+  > *.key\
+  > .env\
+  > .env.*\
+  > EOF
+  - [E:E003] Missing ignore pattern `docker-compose.override.yml'
+             File  : <stdin>
 --> exit 1
 
 It passes good file.

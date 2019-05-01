@@ -1,17 +1,31 @@
 open Cmdliner
 
+let string_of_in_channel ch =
+  let buf = Buffer.create 1024 in
+  let rec loop () =
+    try
+      Buffer.add_channel buf ch 1024 ;
+      loop ()
+    with End_of_file -> ()
+  in
+  loop () ; close_in_noerr ch ; Buffer.contents buf
+
 let string_of_file filename =
   let ch = open_in_bin filename in
-  let len = in_channel_length ch in
-  let s = really_input_string ch len in
-  close_in_noerr ch ; s
+  string_of_in_channel ch
 
 let file =
   let doc = "The ignore file to check" in
-  Arg.(required & pos 0 (some non_dir_file) None & info [] ~docv:"FILE" ~doc)
+  Arg.(value & pos 0 (some non_dir_file) None & info [] ~docv:"FILE" ~doc)
 
 let check filename =
-  let s = string_of_file filename in
+  let filename, s =
+    match filename with
+    | None ->
+        ("<stdin>", string_of_in_channel stdin)
+    | Some filename ->
+        (filename, string_of_file filename)
+  in
   let incidents = Ignorefilelib.check ~filename s in
   match incidents with
   | [] ->
